@@ -1,0 +1,45 @@
+[package]
+authors = ["Elijah Axel L. Ang"]
+name = "lalamove-rs"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "An unofficial Lalamove API crate for rust. It's still in development; PRs welcome!"
+homepage = "https://github.com/eliaxelang007/Lalamove-Rs"
+repository = "https://github.com/eliaxelang007/Lalamove-Rs"
+readme = "README.md"
+keywords = ["api", "http", "async", "lalamove", "commerce"]
+categories = ["api-bindings", "asynchronous", "web-programming::http-client"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+default = ["reqwest"]
+awc = ["dep:awc", "_client"]
+reqwest = ["dep:reqwest", "_client"]
+_client = ["dep:mime", "dep:serde_json", "dep:hmac", "dep:sha2", "dep:hex"]
+
+[dependencies]
+cfg-if = "1.0.0"
+async-trait = "0.1.73"
+
+reqwest = { version = "0.11.20", optional = true }
+awc = { version = "3.1.1", features = ["rustls"], optional = true }
+mime = { version = "0.3.17", optional = true }
+http = "0.2.9"
+
+serde = { version = "1.0.183", features = ["derive"] }
+serde_json = { version = "1.0.105", optional = true }
+serde_with = "3.3.0"
+
+thiserror = "1.0.47"
+
+hmac = { version = "0.12.1", optional = true }
+sha2 = { version = "0.10.7", optional = true }
+hex = { version = "0.4.3", optional = true }
+rusty-money = "0.4.1"
+phonenumber = "0.3.2"
+
+[dev-dependencies]
+tokio = { version = "1.32.0", features = ["macros"] }
+dotenvy_macro = "0.15.7"
