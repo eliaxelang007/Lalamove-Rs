@@ -15,7 +15,7 @@ pub trait Market
 where
     <<Self as Market>::Languages as FromStr>::Err: Display,
 {
-    type Languages: Language;
+    type Languages: Language + Clone;
     fn country() -> Country;
 }
 
@@ -26,7 +26,7 @@ where
     fn language_code(&self) -> &'static str;
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Clone)]
 pub struct PhilippineMarket;
 
 impl Market for PhilippineMarket {
@@ -37,7 +37,7 @@ impl Market for PhilippineMarket {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum PhilippineLanguages {
     English,
 }

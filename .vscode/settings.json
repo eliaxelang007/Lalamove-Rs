@@ -1,5 +1,7 @@
 {
-    "rust-analyzer.cargo.features": [],
+    "rust-analyzer.cargo.features": [
+        "reqwest"
+    ],
     "cSpell.words": [
         "dotenvy",
         "lalamove",

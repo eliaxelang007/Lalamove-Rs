@@ -49,6 +49,7 @@ pub trait HttpClient: Default {
     async fn request(&self, request: Request<String>) -> Result<HttpResponse, Self::Err>;
 }
 
+#[derive(Clone)]
 pub struct Lalamove<M: Market, C: HttpClient>
 where
     <<M as Market>::Languages as FromStr>::Err: Display,
@@ -374,7 +375,7 @@ pub enum RequestError<C: HttpClient> {
     NoData,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Clone)]
 pub struct Config<M: Market>
 where
     <<M as Market>::Languages as FromStr>::Err: Display,
@@ -488,7 +489,7 @@ impl Display for ApiPaths {
     }
 }
 
-#[derive(PartialEq, Eq, Debug, Serialize)]
+#[derive(PartialEq, Eq, Debug, Serialize, Clone)]
 pub enum ApiEnvironment {
     Sandbox,
     Production,

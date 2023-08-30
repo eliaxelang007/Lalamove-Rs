@@ -9,46 +9,8 @@ use crate::{
     RequestError,
 };
 
-#[derive(Debug, ThisError)]
-pub enum ReqwestClientError {
-    #[error(transparent)]
-    ReqwestError(#[from] ReqwestError),
-    #[error(transparent)]
-    HttpError(#[from] HttpError),
-}
-
-impl Into<RequestError<ReqwestClient>> for ReqwestClientError {
-    fn into(self) -> RequestError<ReqwestClient> {
-        RequestError::HttpClientError(self)
-    }
-}
-
-#[async_trait(?Send)]
-impl HttpClient for ReqwestClient {
-    type Err = ReqwestClientError;
-
-    async fn request(&self, request: Request<String>) -> Result<HttpResponse, Self::Err> {
-        let mut client_request =
-            self.request(request.method().to_owned(), request.uri().to_string());
-
-        for (header_name, header_value) in request.headers().iter() {
-            client_request = client_request.header(header_name, header_value)
-        }
-
-        let response = client_request
-            .body(request.body().to_owned())
-            .send()
-            .await?;
-
-        Ok(HttpResponse {
-            status: response.status(),
-            bytes: Vec::from(response.bytes().await?),
-        })
-    }
-}
-
 #[cfg(test)]
-mod reqwest_tests {
+mod tests {
     #[tokio::test]
     async fn main() {
         use crate::{
@@ -104,5 +66,43 @@ mod reqwest_tests {
             .unwrap();
 
         println!("{delivery:?}");
+    }
+}
+
+#[derive(Debug, ThisError)]
+pub enum ReqwestClientError {
+    #[error(transparent)]
+    ReqwestError(#[from] ReqwestError),
+    #[error(transparent)]
+    HttpError(#[from] HttpError),
+}
+
+impl Into<RequestError<ReqwestClient>> for ReqwestClientError {
+    fn into(self) -> RequestError<ReqwestClient> {
+        RequestError::HttpClientError(self)
+    }
+}
+
+#[async_trait(?Send)]
+impl HttpClient for ReqwestClient {
+    type Err = ReqwestClientError;
+
+    async fn request(&self, request: Request<String>) -> Result<HttpResponse, Self::Err> {
+        let mut client_request =
+            self.request(request.method().to_owned(), request.uri().to_string());
+
+        for (header_name, header_value) in request.headers().iter() {
+            client_request = client_request.header(header_name, header_value)
+        }
+
+        let response = client_request
+            .body(request.body().to_owned())
+            .send()
+            .await?;
+
+        Ok(HttpResponse {
+            status: response.status(),
+            bytes: Vec::from(response.bytes().await?),
+        })
     }
 }
