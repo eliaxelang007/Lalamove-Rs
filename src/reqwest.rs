@@ -32,19 +32,18 @@ mod tests {
 
         let market_info = lalamove.market_info().await.unwrap();
 
-        // Goodluck Lalamove driver.
         let (quoted_request, _) = lalamove
             .quote(QuotationRequest {
                 pick_up_location: Location {
-                    latitude: 48.85846183491826,
-                    longitude: 2.294438381392602,
-                    address: "Eiffel Tower, Avenue Anatole France, Paris, France".to_owned(),
+                    latitude: 14.535372967557564,
+                    longitude: 120.98197538196277,
+                    address: "SM Mall of Asia, Seaside Boulevard, 123, Pasay, Metro Manila".to_owned(),
                 },
                 service: market_info.regions[0].services[0].service.clone(),
                 stops: [Location {
-                    latitude: 41.90258651478627,
-                    longitude: 12.453863630073503,
-                    address: "St. Peter's Basilica, Piazza San Pietro, Vatican City".to_string(),
+                    latitude: 14.586164229973143,
+                    longitude: 121.05665251264826,
+                    address: "SM Megamall, Doña Julia Vargas Avenue, Ortigas Center, Mandaluyong, Metro Manila".to_string(),
                 }],
             })
             .await
@@ -55,11 +54,11 @@ mod tests {
                 quoted: quoted_request,
                 sender: PersonInfo {
                     name: "Alice".to_string(),
-                    phone_number: parse(None, "1024").unwrap(),
+                    phone_number: parse(None, "+639000001024").unwrap(),
                 },
                 recipients_info: [PersonInfo {
                     name: "Bob".to_string(),
-                    phone_number: parse(None, "512").unwrap(),
+                    phone_number: parse(None, "+639000000512").unwrap(),
                 }],
             })
             .await
