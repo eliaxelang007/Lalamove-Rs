@@ -33,18 +33,6 @@ cfg_if! {
     }
 }
 
-cfg_if! {
-    if #[cfg(feature = "awc")] {
-        mod awc;
-    }
-}
-
-cfg_if! {
-    if #[cfg(feature = "reqwest")] {
-        mod reqwest;
-    }
-}
-
 #[derive(Debug, Deserialize, Serialize)]
 pub enum DeliveryStatus {
     AssigningDriver,

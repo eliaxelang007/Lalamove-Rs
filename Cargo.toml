@@ -42,4 +42,5 @@ phonenumber = "0.3.2"
 
 [dev-dependencies]
 tokio = { version = "1.32.0", features = ["macros"] }
+actix-rt = "2.9.0"
 dotenvy_macro = "0.15.7"

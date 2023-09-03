@@ -82,7 +82,7 @@ impl Into<RequestError<ReqwestClient>> for ReqwestClientError {
     }
 }
 
-#[async_trait(?Send)]
+#[async_trait]
 impl HttpClient for ReqwestClient {
     type Err = ReqwestClientError;
 

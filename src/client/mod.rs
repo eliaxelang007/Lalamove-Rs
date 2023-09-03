@@ -37,22 +37,39 @@ use crate::{
 };
 
 use async_trait::async_trait;
+use cfg_if::cfg_if;
 
 pub struct HttpResponse {
     pub status: StatusCode,
     pub bytes: Vec<u8>,
 }
 
-#[async_trait(?Send)]
-pub trait HttpClient: Default {
-    type Err: Error + Debug + Into<RequestError<Self>>;
-    async fn request(&self, request: Request<String>) -> Result<HttpResponse, Self::Err>;
+cfg_if! {
+    if #[cfg(feature = "awc")] {
+        mod awc;
+
+        #[async_trait(?Send)]
+        pub trait HttpClient: Default {
+            type Err: Error + Into<RequestError<Self>>;
+            async fn request(&self, request: Request<String>) -> Result<HttpResponse, Self::Err>;
+        }
+    } else if #[cfg(feature = "reqwest")] {
+        mod reqwest;
+
+        #[async_trait]
+        pub trait HttpClient: Default {
+            type Err: Error + Debug + Into<RequestError<Self>>;
+            async fn request(&self, request: Request<String>) -> Result<HttpResponse, Self::Err>;
+        }
+    } else {
+
+    }
 }
 
 #[derive(Clone)]
 pub struct Lalamove<M: Market, C: HttpClient>
 where
-    <<M as Market>::Languages as FromStr>::Err: Display,
+    <<M as Market>::Languages as FromStr>::Err: Error,
 {
     client: C,
     config: Config<M>,
@@ -60,7 +77,7 @@ where
 
 impl<M: Market, C: HttpClient> Lalamove<M, C>
 where
-    <<M as Market>::Languages as FromStr>::Err: Display,
+    <<M as Market>::Languages as FromStr>::Err: Error,
 {
     pub fn new(config: Config<M>) -> Self {
         Lalamove {
@@ -70,7 +87,7 @@ where
     }
 }
 
-#[derive(Debug, ThisError)]
+#[derive(ThisError)]
 pub enum QuoteError<C: HttpClient> {
     #[error(transparent)]
     RequestError(#[from] RequestError<C>),
@@ -80,9 +97,22 @@ pub enum QuoteError<C: HttpClient> {
     MoneyError(#[from] MoneyError),
 }
 
+impl<C: HttpClient> Debug for QuoteError<C>
+where
+    C::Err: Error,
+{
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+        match self {
+            Self::RequestError(e) => write!(f, "RequestError({:?})", e),
+            Self::MoneyError(e) => write!(f, "MoneyError({:?})", e),
+            Self::CurrencyNotFound => write!(f, "CurrencyNotFound"),
+        }
+    }
+}
+
 impl<M: Market, C: HttpClient> Lalamove<M, C>
 where
-    <<M as Market>::Languages as FromStr>::Err: Display,
+    <<M as Market>::Languages as FromStr>::Err: Error,
 {
     pub async fn market_info(&self) -> Result<MarketInfo, RequestError<C>> {
         self.make_request::<MarketInfo>(ApiPaths::Cities, Method::GET, None::<()>)
@@ -361,8 +391,11 @@ pub enum ApiError {
     Json(Value),
 }
 
-#[derive(Debug, ThisError)]
-pub enum RequestError<C: HttpClient> {
+#[derive(ThisError)]
+pub enum RequestError<C: HttpClient>
+where
+    C::Err: Error,
+{
     #[error(transparent)]
     HttpClientError(C::Err),
     #[error(transparent)]
@@ -375,10 +408,25 @@ pub enum RequestError<C: HttpClient> {
     NoData,
 }
 
+impl<C: HttpClient> Debug for RequestError<C>
+where
+    C::Err: Error,
+{
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+        match self {
+            Self::HttpClientError(e) => write!(f, "HttpClientError({:?})", e),
+            Self::FromUtf8Error(e) => write!(f, "FromUtf8Error({:?})", e),
+            Self::ApiError(e) => write!(f, "ApiError({:?})", e),
+            Self::SerdeJsonError(e) => write!(f, "SerdeJsonError({:?})", e),
+            Self::NoData => write!(f, "NoData"),
+        }
+    }
+}
+
 #[derive(Debug, Serialize, Clone)]
 pub struct Config<M: Market>
 where
-    <<M as Market>::Languages as FromStr>::Err: Display,
+    <<M as Market>::Languages as FromStr>::Err: Error,
 {
     pub api_key: String,
     pub api_secret: String,
@@ -388,7 +436,7 @@ where
 
 impl<M: Market> Config<M>
 where
-    <<M as Market>::Languages as FromStr>::Err: Display,
+    <<M as Market>::Languages as FromStr>::Err: Error,
 {
     pub fn new(
         api_key: String,
