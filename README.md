@@ -81,5 +81,8 @@ As of now, this library only supports the Philippine market (because that what I
 
 ## Changelog
 
+0.1.2
+- Implemented [Debug] manually for some error types to fix some trait bound errors.
+  
 0.1.1
 - Made the [Lalamove] client cloneable.

@@ -44,10 +44,10 @@ pub enum PhilippineLanguages {
 
 impl Language for PhilippineLanguages {
     fn language_code(&self) -> &'static str {
-        use PhilippineLanguages::*;
+        use PhilippineLanguages as PL;
 
         match self {
-            English => "en_PH",
+            PL::English => "en_PH",
         }
     }
 }
@@ -62,12 +62,12 @@ impl FromStr for PhilippineLanguages {
     type Err = InvalidPhilippineLanguage;
 
     fn from_str(language_code: &str) -> Result<Self, Self::Err> {
-        use PhilippineLanguages::*;
+        use PhilippineLanguages as PS;
 
         let language_code = language_code.to_lowercase();
 
         Ok(match &*language_code {
-            "en_ph" => English,
+            "en_ph" => PS::English,
             _ => return Err(InvalidPhilippineLanguage::NoLanguageCodeFound),
         })
     }
@@ -79,10 +79,10 @@ pub enum Country {
 
 impl Country {
     pub const fn country_code(&self) -> &'static str {
-        use Country::*;
+        use Country as C;
 
         match self {
-            Philippines => "PH",
+            C::Philippines => "PH",
         }
     }
 }
@@ -94,17 +94,17 @@ pub enum Region {
 
 impl Display for Region {
     fn fmt(&self, formatter: &mut Formatter<'_>) -> FmtResult {
-        use PhilippineRegions::*;
-        use Region::*;
+        use PhilippineRegions as PR;
+        use Region as R;
 
         write!(
             formatter,
             "{}",
             match self {
-                Philippines(region) => match region {
-                    Cebu => "PH CEB",
-                    Manila => "PH MNL",
-                    Pampanga => "PH PAM",
+                R::Philippines(region) => match region {
+                    PR::Cebu => "PH CEB",
+                    PR::Manila => "PH MNL",
+                    PR::Pampanga => "PH PAM",
                 },
             }
         )
@@ -122,15 +122,15 @@ impl FromStr for Region {
     type Err = RegionError;
 
     fn from_str(region: &str) -> Result<Region, RegionError> {
-        use PhilippineRegions::*;
-        use Region::*;
+        use PhilippineRegions as PR;
+        use Region as R;
 
         let region = region.to_lowercase();
 
-        Ok(Philippines(match &*region {
-            "ph ceb" => Cebu,
-            "ph mnl" => Manila,
-            "ph pam" => Pampanga,
+        Ok(R::Philippines(match &*region {
+            "ph ceb" => PR::Cebu,
+            "ph mnl" => PR::Manila,
+            "ph pam" => PR::Pampanga,
             _ => {
                 return Err(RegionError::InvalidString);
             }
@@ -231,7 +231,7 @@ impl<'de> Deserialize<'de> for Kilograms {
 
         if measurement.unit != "kg" {
             return Err(DeError::invalid_value(
-                Unexpected::Str(&*measurement.unit),
+                Unexpected::Str(&measurement.unit),
                 &"kg",
             ));
         }
@@ -249,7 +249,7 @@ impl<'de> Deserialize<'de> for Meters {
 
         if measurement.unit != "m" {
             return Err(DeError::invalid_value(
-                Unexpected::Str(&*measurement.unit),
+                Unexpected::Str(&measurement.unit),
                 &"m",
             ));
         }

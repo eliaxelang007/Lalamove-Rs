@@ -81,9 +81,9 @@ pub enum AwcClientError {
     HttpError(#[from] HttpError),
 }
 
-impl Into<RequestError<AwcClient>> for AwcClientError {
-    fn into(self) -> RequestError<AwcClient> {
-        RequestError::HttpClientError(self)
+impl From<AwcClientError> for RequestError<AwcClient> {
+    fn from(value: AwcClientError) -> Self {
+        RequestError::HttpClientError(value)
     }
 }
 

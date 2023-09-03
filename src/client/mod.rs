@@ -131,16 +131,13 @@ where
 
         let api_request = ApiQuotationRequest {
             service_type: request_clone.service,
-            stops: {
-                let locations = once(request_clone.pick_up_location)
+            stops:  once(request_clone.pick_up_location)
                         .chain(request_clone.stops)
                         .map(|location| location.into())
                         .collect::<Vec<_>>()
                         .try_into()
-                        .expect("This shouldn't fail because the stops array's size is RECIPIENT_STOP_COUNT + 1.");
-
-                locations
-            },
+                        .expect("This shouldn't fail because the stops array's size is RECIPIENT_STOP_COUNT + 1.")
+            ,
             language: self.config.language.language_code().to_owned(),
         };
 
@@ -170,10 +167,10 @@ where
             Quote {
                 distance: response.distance,
                 price: {
-                    let currency = iso::find(&*response.price_breakdown.currency)
+                    let currency = iso::find(&response.price_breakdown.currency)
                         .ok_or(QuoteError::CurrencyNotFound)?;
 
-                    Money::from_str(&*response.price_breakdown.total, currency)?
+                    Money::from_str(&response.price_breakdown.total, currency)?
                 },
             },
         ));
@@ -352,15 +349,15 @@ where
         return match response_json {
             Ok(response) => {
                 use RequestError::NoData;
-                use Value::*;
+                use Value as V;
                 match response {
-                    Object(mut map) => {
+                    V::Object(mut map) => {
                         let data = map.get_mut("data");
 
                         match data {
                             Some(data) => Ok(from_value::<T>(data.take())?),
                             None => Err(if map.contains_key("errors") {
-                                RequestError::ApiError(ApiError::Json(Object(map)))
+                                RequestError::ApiError(ApiError::Json(V::Object(map)))
                             } else {
                                 NoData
                             }),
@@ -369,14 +366,12 @@ where
                     _ => Err(NoData),
                 }
             }
-            Err(error) => {
-                use DeJsonErrorCategory::*;
-
-                Err(match error.classify() {
-                    Syntax => RequestError::ApiError(ApiError::InvalidJson(response_string)),
-                    _ => RequestError::SerdeJsonError(error),
-                })
-            }
+            Err(error) => Err(match error.classify() {
+                DeJsonErrorCategory::Syntax => {
+                    RequestError::ApiError(ApiError::InvalidJson(response_string))
+                }
+                _ => RequestError::SerdeJsonError(error),
+            }),
         };
     }
 }
@@ -519,13 +514,13 @@ enum ApiPaths {
 
 impl ApiPaths {
     fn path(&self) -> String {
-        use ApiPaths::*;
+        use ApiPaths as AP;
 
         (match self {
-            Cities => "/v3/cities",
-            Quotations => "/v3/quotations",
-            Orders => "/v3/orders",
-            Order(id) => return format!("/v3/orders/{id}"),
+            AP::Cities => "/v3/cities",
+            AP::Quotations => "/v3/quotations",
+            AP::Orders => "/v3/orders",
+            AP::Order(id) => return format!("/v3/orders/{id}"),
         })
         .to_string()
     }
@@ -545,11 +540,11 @@ pub enum ApiEnvironment {
 
 impl ApiEnvironment {
     const fn base_url(&self) -> &'static str {
-        use ApiEnvironment::*;
+        use ApiEnvironment as AE;
 
         match self {
-            Sandbox => "https://rest.sandbox.lalamove.com",
-            Production => "https://rest.lalamove.com",
+            AE::Sandbox => "https://rest.sandbox.lalamove.com",
+            AE::Production => "https://rest.lalamove.com",
         }
     }
 }
@@ -560,15 +555,15 @@ impl FromStr for ApiEnvironment {
     fn from_str(api_key_or_api_secret: &str) -> Result<Self, Self::Err> {
         let environment = api_key_or_api_secret.chars().skip(3).collect::<String>();
 
-        use ApiEnvironment::*;
-        use ApiEnvironmentError::*;
+        use ApiEnvironment as AE;
+        use ApiEnvironmentError as AEE;
 
         if environment.starts_with("test") {
-            Ok(Sandbox)
+            Ok(AE::Sandbox)
         } else if environment.starts_with("prod") {
-            Ok(Production)
+            Ok(AE::Production)
         } else {
-            Err(InvalidApiKeyOrApiSecret)
+            Err(AEE::InvalidApiKeyOrApiSecret)
         }
     }
 }

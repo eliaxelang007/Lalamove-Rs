@@ -76,9 +76,9 @@ pub enum ReqwestClientError {
     HttpError(#[from] HttpError),
 }
 
-impl Into<RequestError<ReqwestClient>> for ReqwestClientError {
-    fn into(self) -> RequestError<ReqwestClient> {
-        RequestError::HttpClientError(self)
+impl From<ReqwestClientError> for RequestError<ReqwestClient> {
+    fn from(value: ReqwestClientError) -> Self {
+        RequestError::HttpClientError(value)
     }
 }
 

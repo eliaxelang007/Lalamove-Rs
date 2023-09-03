@@ -54,18 +54,18 @@ impl FromStr for DeliveryStatus {
     type Err = InvalidDeliveryStatus;
 
     fn from_str(delivery_status: &str) -> Result<Self, Self::Err> {
-        use DeliveryStatus::*;
+        use DeliveryStatus as DS;
 
         let delivery_status = delivery_status.to_uppercase();
 
         Ok(match &*delivery_status {
-            "ASSIGNING_DRIVER" => AssigningDriver,
-            "ON_GOING" => Ongoing,
-            "PICKED_UP" => PickedUp,
-            "COMPLETED" => Completed,
-            "CANCELED" => Canceled,
-            "REJECTED" => Rejected,
-            "EXPIRED" => Expired,
+            "ASSIGNING_DRIVER" => DS::AssigningDriver,
+            "ON_GOING" => DS::Ongoing,
+            "PICKED_UP" => DS::PickedUp,
+            "COMPLETED" => DS::Completed,
+            "CANCELED" => DS::Canceled,
+            "REJECTED" => DS::Rejected,
+            "EXPIRED" => DS::Expired,
             _ => return Err(InvalidDeliveryStatus::NoDeliveryStatusFound),
         })
     }
