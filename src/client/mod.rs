@@ -226,8 +226,8 @@ where
             fn from(location: Location) -> Self {
                 ApiLocation {
                     coordinates: ApiCoordinates {
-                        lat: location.latitude,
-                        lng: location.longitude,
+                        lat: location.coordinates.latitude,
+                        lng: location.coordinates.longitude,
                     },
                     address: location.address,
                 }

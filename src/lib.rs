@@ -136,9 +136,14 @@ where
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct Location {
+pub struct Coordinates {
     pub latitude: f64,
     pub longitude: f64,
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct Location {
+    pub coordinates: Coordinates,
     pub address: String,
 }
 
