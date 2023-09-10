@@ -80,6 +80,9 @@ It's still a work in progress!
 As of now, this library only supports the Philippine market (because that what I needed for my use case), but I plan to flesh this package out in the future. Pull requests are welcome! I'm still a novice rust programmer so I'll need all the help I can get building this library.
 
 ## Changelog
+0.1.4
+Separated Serialization and Deserialization of types from their structures.
+
 0.1.3
 - Separated [latitude] and [longitude] fields from [Location] into a new type called [Coordinates].
 

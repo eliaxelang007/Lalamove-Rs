@@ -131,7 +131,7 @@ where
                 .regions
                 .into_iter()
                 .map(|region| RegionInfo {
-                    region: region.region,
+                    region: region.locode,
                     services: region
                         .services
                         .into_iter()
@@ -168,7 +168,7 @@ where
         #[derive(Deserialize, Debug)]
         struct ApiRegionInfo {
             #[serde_as(as = "DisplayFromStr")]
-            pub region: Region,
+            pub locode: Region,
             pub services: Vec<ApiService>,
         }
 
@@ -194,55 +194,6 @@ where
             height: ApiMeters,
             length: ApiMeters,
         }
-
-        #[derive(Debug)]
-        struct ApiMeters(f32);
-        #[derive(Debug)]
-        struct ApiKilograms(f32);
-
-        impl<'de> Deserialize<'de> for ApiKilograms {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-            where
-                D: Deserializer<'de>,
-            {
-                let measurement = ApiMeasurementDeserialization::deserialize(deserializer)?;
-
-                if measurement.unit != "kg" {
-                    return Err(DeError::invalid_value(
-                        Unexpected::Str(&measurement.unit),
-                        &"kg",
-                    ));
-                }
-
-                Ok(ApiKilograms(measurement.value))
-            }
-        }
-
-        impl<'de> Deserialize<'de> for ApiMeters {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-            where
-                D: Deserializer<'de>,
-            {
-                let measurement = ApiMeasurementDeserialization::deserialize(deserializer)?;
-
-                if measurement.unit != "m" {
-                    return Err(DeError::invalid_value(
-                        Unexpected::Str(&measurement.unit),
-                        &"m",
-                    ));
-                }
-
-                Ok(ApiMeters(measurement.value))
-            }
-        }
-
-        #[serde_as]
-        #[derive(Deserialize, Debug)]
-        struct ApiMeasurementDeserialization {
-            unit: String,
-            #[serde_as(as = "DisplayFromStr")]
-            value: f32,
-        }
     }
 
     pub async fn quote<const RECIPIENT_STOP_COUNT: usize>(
@@ -259,7 +210,7 @@ where
             service_type: request_clone.service,
             stops:  once(request_clone.pick_up_location)
                         .chain(request_clone.stops)
-                        .map(|location|                 ApiLocation {
+                        .map(|location| ApiLocation {
                             coordinates: ApiCoordinates {
                                 lat: location.coordinates.latitude,
                                 lng: location.coordinates.longitude,
@@ -297,7 +248,7 @@ where
                 stop_ids,
             },
             Quote {
-                distance: response.distance,
+                distance: Meters(response.distance.0),
                 price: {
                     let currency = iso::find(&response.price_breakdown.currency)
                         .ok_or(QuoteError::CurrencyNotFound)?;
@@ -315,7 +266,7 @@ where
             Assert<{ valid_recipient_stop_count(RECIPIENT_STOP_COUNT) }>: IsTrue,
             [Location; RECIPIENT_STOP_COUNT + 1]: Sized,
         {
-            distance: Meters,
+            distance: ApiMeters,
             price_breakdown: ApiPriceBreakdown,
             #[serde_as(as = "DisplayFromStr")]
             quotation_id: QuotationId,
@@ -508,6 +459,55 @@ where
             }),
         };
     }
+}
+
+#[derive(Debug)]
+struct ApiMeters(f32);
+#[derive(Debug)]
+struct ApiKilograms(f32);
+
+impl<'de> Deserialize<'de> for ApiKilograms {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let measurement = ApiMeasurementDeserialization::deserialize(deserializer)?;
+
+        if measurement.unit != "kg" {
+            return Err(DeError::invalid_value(
+                Unexpected::Str(&measurement.unit),
+                &"kg",
+            ));
+        }
+
+        Ok(ApiKilograms(measurement.value))
+    }
+}
+
+impl<'de> Deserialize<'de> for ApiMeters {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let measurement = ApiMeasurementDeserialization::deserialize(deserializer)?;
+
+        if measurement.unit != "m" {
+            return Err(DeError::invalid_value(
+                Unexpected::Str(&measurement.unit),
+                &"m",
+            ));
+        }
+
+        Ok(ApiMeters(measurement.value))
+    }
+}
+
+#[serde_as]
+#[derive(Deserialize, Debug)]
+struct ApiMeasurementDeserialization {
+    unit: String,
+    #[serde_as(as = "DisplayFromStr")]
+    value: f32,
 }
 
 #[derive(Debug, ThisError)]
