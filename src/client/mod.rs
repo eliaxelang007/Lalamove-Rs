@@ -9,7 +9,11 @@ use std::{
 
 use mime::APPLICATION_JSON;
 
-use serde::{de::DeserializeOwned, ser::Serialize as Serializable, Deserialize, Serialize};
+use serde::{
+    de::{DeserializeOwned, Error as DeError, Unexpected},
+    ser::Serialize as Serializable,
+    Deserialize, Deserializer, Serialize,
+};
 use serde_json::{
     error::{Category as DeJsonErrorCategory, Error as SerdeJsonError},
     from_str, from_value, json, to_value, Value,
@@ -22,7 +26,7 @@ use sha2::Sha256;
 
 use http::{
     header::{ACCEPT, AUTHORIZATION, CONTENT_TYPE},
-    Method, Request, StatusCode,
+    Method, Request, StatusCode, Uri,
 };
 
 use thiserror::Error as ThisError;
@@ -32,8 +36,9 @@ use rusty_money::{iso, Money, MoneyError};
 
 use crate::{
     markets::Language, valid_recipient_stop_count, Assert, Delivery, DeliveryId,
-    DeliveryRequest, DeliveryStatus, IsTrue, Location, Market, MarketInfo, Meters, QuotationId,
-    QuotationRequest, Quote, QuotedRequest, ServiceType, StopId,
+    DeliveryRequest, DeliveryStatus, Dimensions, IsTrue, Kilograms, Location, Market,
+    MarketInfo, Meters, QuotationId, QuotationRequest, Quote, QuotedRequest, Region, RegionInfo,
+    Service, ServiceType, SpecialRequest, SpecialRequestType, StopId,
 };
 
 use async_trait::async_trait;
@@ -117,8 +122,127 @@ where
     <<M as Market>::Languages as FromStr>::Err: Error,
 {
     pub async fn market_info(&self) -> Result<MarketInfo, RequestError<C>> {
-        self.make_request::<MarketInfo>(ApiPaths::Cities, Method::GET, None::<()>)
-            .await
+        let market_info = self
+            .make_request::<ApiMarketInfo>(ApiPaths::Cities, Method::GET, None::<()>)
+            .await?;
+
+        return Ok(MarketInfo {
+            regions: market_info
+                .regions
+                .into_iter()
+                .map(|region| RegionInfo {
+                    region: region.region,
+                    services: region
+                        .services
+                        .into_iter()
+                        .map(|service| Service {
+                            description: service.description,
+                            service: service.key,
+                            dimensions: Dimensions {
+                                width: Meters(service.dimensions.width.0),
+                                height: Meters(service.dimensions.height.0),
+                                length: Meters(service.dimensions.length.0),
+                            },
+                            special_requests: service
+                                .special_requests
+                                .into_iter()
+                                .map(|special_request| SpecialRequest {
+                                    description: special_request.description,
+                                    special_request: special_request.name,
+                                })
+                                .collect(),
+                            load: Kilograms(service.load.0),
+                        })
+                        .collect::<Vec<_>>(),
+                })
+                .collect::<Vec<_>>(),
+        });
+
+        #[derive(Deserialize, Debug)]
+        #[serde(transparent)]
+        struct ApiMarketInfo {
+            pub regions: Vec<ApiRegionInfo>,
+        }
+
+        #[serde_as]
+        #[derive(Deserialize, Debug)]
+        struct ApiRegionInfo {
+            #[serde_as(as = "DisplayFromStr")]
+            pub region: Region,
+            pub services: Vec<ApiService>,
+        }
+
+        #[derive(Deserialize, Debug)]
+        #[serde(rename_all = "camelCase")]
+        struct ApiService {
+            pub key: ServiceType,
+            pub description: String,
+            pub dimensions: ApiDimensions,
+            pub load: ApiKilograms,
+            pub special_requests: Vec<ApiSpecialRequest>,
+        }
+
+        #[derive(Deserialize, Debug)]
+        struct ApiSpecialRequest {
+            pub description: String,
+            pub name: SpecialRequestType,
+        }
+
+        #[derive(Deserialize, Debug)]
+        struct ApiDimensions {
+            width: ApiMeters,
+            height: ApiMeters,
+            length: ApiMeters,
+        }
+
+        #[derive(Debug)]
+        struct ApiMeters(f32);
+        #[derive(Debug)]
+        struct ApiKilograms(f32);
+
+        impl<'de> Deserialize<'de> for ApiKilograms {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+            where
+                D: Deserializer<'de>,
+            {
+                let measurement = ApiMeasurementDeserialization::deserialize(deserializer)?;
+
+                if measurement.unit != "kg" {
+                    return Err(DeError::invalid_value(
+                        Unexpected::Str(&measurement.unit),
+                        &"kg",
+                    ));
+                }
+
+                Ok(ApiKilograms(measurement.value))
+            }
+        }
+
+        impl<'de> Deserialize<'de> for ApiMeters {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+            where
+                D: Deserializer<'de>,
+            {
+                let measurement = ApiMeasurementDeserialization::deserialize(deserializer)?;
+
+                if measurement.unit != "m" {
+                    return Err(DeError::invalid_value(
+                        Unexpected::Str(&measurement.unit),
+                        &"m",
+                    ));
+                }
+
+                Ok(ApiMeters(measurement.value))
+            }
+        }
+
+        #[serde_as]
+        #[derive(Deserialize, Debug)]
+        struct ApiMeasurementDeserialization {
+            unit: String,
+            #[serde_as(as = "DisplayFromStr")]
+            value: f32,
+        }
     }
 
     pub async fn quote<const RECIPIENT_STOP_COUNT: usize>(
@@ -135,7 +259,13 @@ where
             service_type: request_clone.service,
             stops:  once(request_clone.pick_up_location)
                         .chain(request_clone.stops)
-                        .map(|location| location.into())
+                        .map(|location|                 ApiLocation {
+                            coordinates: ApiCoordinates {
+                                lat: location.coordinates.latitude,
+                                lng: location.coordinates.longitude,
+                            },
+                            address: location.address,
+                        })
                         .collect::<Vec<_>>()
                         .try_into()
                         .expect("This shouldn't fail because the stops array's size is RECIPIENT_STOP_COUNT + 1.")
@@ -201,7 +331,6 @@ where
             stop_id: StopId,
         }
 
-        #[serde_as]
         #[derive(Deserialize, Debug)]
         #[serde(rename_all = "camelCase")]
         struct ApiPriceBreakdown {
@@ -222,18 +351,6 @@ where
         struct ApiLocation {
             coordinates: ApiCoordinates,
             address: String,
-        }
-
-        impl From<Location> for ApiLocation {
-            fn from(location: Location) -> Self {
-                ApiLocation {
-                    coordinates: ApiCoordinates {
-                        lat: location.coordinates.latitude,
-                        lng: location.coordinates.longitude,
-                    },
-                    address: location.address,
-                }
-            }
         }
 
         #[serde_as]
@@ -276,9 +393,24 @@ where
                 .expect("There should be enough Stop IDs for the drop off locations!"),
         };
 
-        return self
-            .make_request(ApiPaths::Orders, Method::POST, Some(request))
-            .await;
+        let delivery = self
+            .make_request::<ApiDelivery>(ApiPaths::Orders, Method::POST, Some(request))
+            .await?;
+
+        return Ok(Delivery {
+            id: delivery.order_id,
+            share_link: delivery.share_link,
+        });
+
+        #[serde_as]
+        #[derive(Debug, Deserialize, Serialize)]
+        #[serde(rename_all = "camelCase")]
+        pub struct ApiDelivery {
+            #[serde_as(as = "DisplayFromStr")]
+            pub order_id: DeliveryId,
+            #[serde_as(as = "DisplayFromStr")]
+            pub share_link: Uri,
+        }
 
         #[serde_as]
         #[derive(Serialize, Debug)]

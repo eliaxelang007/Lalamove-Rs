@@ -33,7 +33,7 @@ cfg_if! {
     }
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub enum DeliveryStatus {
     AssigningDriver,
     Ongoing,
@@ -89,12 +89,12 @@ impl Display for DeliveryId {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(transparent)]
 pub struct DriverId(u64);
 
 #[serde_as]
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DeliveryRequest<const RECIPIENT_STOP_COUNT: usize>
 where
     Assert<{ valid_recipient_stop_count(RECIPIENT_STOP_COUNT) }>: IsTrue,
@@ -105,14 +105,14 @@ where
     pub recipients_info: [PersonInfo; RECIPIENT_STOP_COUNT],
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PersonInfo {
     pub name: String,
     pub phone_number: PhoneNumber,
 }
 
 #[serde_as]
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct QuotedRequest<const RECIPIENT_STOP_COUNT: usize>
 where
     Assert<{ valid_recipient_stop_count(RECIPIENT_STOP_COUNT) }>: IsTrue,
@@ -155,10 +155,10 @@ pub struct Quote {
     pub price: Money<'static, Currency>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct QuotationId(u64);
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct StopId(u64);
 
 impl Display for QuotationId {
@@ -190,13 +190,10 @@ impl FromStr for StopId {
 }
 
 #[serde_as]
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Delivery {
-    #[serde_as(as = "DisplayFromStr")]
-    #[serde(rename(deserialize = "orderId"))]
     pub id: DeliveryId,
     #[serde_as(as = "DisplayFromStr")]
-    #[serde(rename(deserialize = "shareLink"))]
     pub share_link: Uri,
 }
 

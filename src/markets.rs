@@ -4,10 +4,7 @@ use std::{
 };
 use thiserror::Error as ThisError;
 
-use serde::{
-    de::{Error as DeError, Unexpected},
-    Deserialize, Deserializer, Serialize,
-};
+use serde::{Deserialize, Serialize};
 
 use serde_with::{serde_as, DisplayFromStr};
 
@@ -26,7 +23,7 @@ where
     fn language_code(&self) -> &'static str;
 }
 
-#[derive(Debug, Serialize, Clone)]
+#[derive(Debug, Clone)]
 pub struct PhilippineMarket;
 
 impl Market for PhilippineMarket {
@@ -162,8 +159,7 @@ pub enum RegionError {
     InvalidString,
 }
 
-#[derive(Deserialize, Debug, Serialize)]
-#[serde(transparent)]
+#[derive(Deserialize, Debug, Serialize, Clone)]
 pub struct MarketInfo {
     pub regions: Vec<RegionInfo>,
 }
@@ -172,19 +168,16 @@ pub struct MarketInfo {
 #[derive(Deserialize, Debug, Serialize, Clone)]
 pub struct RegionInfo {
     #[serde_as(as = "DisplayFromStr")]
-    #[serde(rename(deserialize = "locode"))]
     pub region: Region,
     pub services: Vec<Service>,
 }
 
 #[derive(Deserialize, Debug, Serialize, Clone)]
 pub struct Service {
-    #[serde(rename(deserialize = "key"))]
     pub service: ServiceType,
     pub description: String,
     pub dimensions: Dimensions,
     pub load: Kilograms,
-    #[serde(rename(deserialize = "specialRequests"))]
     pub special_requests: Vec<SpecialRequest>,
 }
 
@@ -201,7 +194,6 @@ impl Display for ServiceType {
 #[derive(Deserialize, Debug, Serialize, Clone)]
 pub struct SpecialRequest {
     pub description: String,
-    #[serde(rename(deserialize = "name"))]
     pub special_request: SpecialRequestType,
 }
 
@@ -209,59 +201,15 @@ pub struct SpecialRequest {
 #[serde(transparent)]
 pub struct SpecialRequestType(String);
 
-#[derive(Deserialize, Debug, Serialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Dimensions {
     pub width: Meters,
     pub height: Meters,
     pub length: Meters,
 }
 
-#[derive(Debug, Serialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Meters(pub f32);
 
-#[derive(Debug, Serialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Kilograms(pub f32);
-
-impl<'de> Deserialize<'de> for Kilograms {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        let measurement = MeasurementDeserialization::deserialize(deserializer)?;
-
-        if measurement.unit != "kg" {
-            return Err(DeError::invalid_value(
-                Unexpected::Str(&measurement.unit),
-                &"kg",
-            ));
-        }
-
-        Ok(Kilograms(measurement.value))
-    }
-}
-
-impl<'de> Deserialize<'de> for Meters {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        let measurement = MeasurementDeserialization::deserialize(deserializer)?;
-
-        if measurement.unit != "m" {
-            return Err(DeError::invalid_value(
-                Unexpected::Str(&measurement.unit),
-                &"m",
-            ));
-        }
-
-        Ok(Meters(measurement.value))
-    }
-}
-
-#[serde_as]
-#[derive(Deserialize)]
-struct MeasurementDeserialization {
-    unit: String,
-    #[serde_as(as = "DisplayFromStr")]
-    value: f32,
-}
