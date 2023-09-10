@@ -45,7 +45,9 @@ pub struct HttpResponse {
 }
 
 cfg_if! {
-    if #[cfg(feature = "awc")] {
+    if #[cfg(all(feature = "reqwest", feature = "awc"))] {
+        compile_error!("The features [reqwest] and [awc] can't be enabled at the same time.");
+    } else if #[cfg(feature = "awc")] {
         mod awc;
 
         #[async_trait(?Send)]

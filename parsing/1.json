@@ -1,0 +1,1152 @@
+[
+    {
+        "locode": "PH CEB",
+        "name": "Cebu Islandwide",
+        "services": [
+            {
+                "deliveryItemSpecification": {},
+                "description": "For small items such as food, documents, and paperbags",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "0.5"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "0.5"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "0.4"
+                    }
+                },
+                "key": "MOTORCYCLE",
+                "load": {
+                    "unit": "kg",
+                    "value": "20"
+                },
+                "specialRequests": [
+                    {
+                        "description": "Pay ₱1,501 – ₱2,000",
+                        "name": "PURCHASE_SERVICE_4"
+                    },
+                    {
+                        "description": "Pay ₱1,001 – ₱1,500",
+                        "name": "PURCHASE_SERVICE_3"
+                    },
+                    {
+                        "description": "Pay ₱501 – ₱1,000",
+                        "name": "PURCHASE_SERVICE_2"
+                    },
+                    {
+                        "description": "Pay less than ₱500",
+                        "name": "PURCHASE_SERVICE_1"
+                    },
+                    {
+                        "description": "Queueing Service",
+                        "name": "QUEUEING_SERVICE"
+                    },
+                    {
+                        "description": "Insulated Box",
+                        "name": "THERMAL_BAG_1"
+                    },
+                    {
+                        "description": "Cash Handling (max: ₱2000)",
+                        "name": "CASH_ON_DELIVERY"
+                    },
+                    {
+                        "description": "CASH_ON_DELIVERY_AUTODEDUCT",
+                        "name": "CASH_ON_DELIVERY_AUTODEDUCT"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Innova and Avanza - For 1 large box like balikbayan box",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "0.9"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "1.2"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "1"
+                    }
+                },
+                "key": "MPV",
+                "load": {
+                    "unit": "kg",
+                    "value": "300"
+                },
+                "specialRequests": [
+                    {
+                        "description": "1 Assistant: 5  drops",
+                        "name": "MOVING_SERVICE_3"
+                    },
+                    {
+                        "description": "1 Assistant: 3-4 drops",
+                        "name": "MOVING_SERVICE_2"
+                    },
+                    {
+                        "description": "1 Assistant: 1-2 drops",
+                        "name": "MOVING_SERVICE_1"
+                    },
+                    {
+                        "description": "Driver Carries (max 50kg)",
+                        "name": "LOADING_SERVICE"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Innova and Avanza - Fixed rate for the first 40 km",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "1.1"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "2.1"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "1.2"
+                    }
+                },
+                "key": "MPV_INTERCITY",
+                "load": {
+                    "unit": "kg",
+                    "value": "300"
+                },
+                "specialRequests": []
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Vios and Wigo - For small boxes, cakes, multiple parcels",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "0.7"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "1"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "0.6"
+                    }
+                },
+                "key": "SEDAN",
+                "load": {
+                    "unit": "kg",
+                    "value": "200"
+                },
+                "specialRequests": [
+                    {
+                        "description": "Pay ₱3,751 – ₱5,000",
+                        "name": "PURCHASE_SERVICE_4"
+                    },
+                    {
+                        "description": "Pay ₱2,501 – ₱3,750",
+                        "name": "PURCHASE_SERVICE_3"
+                    },
+                    {
+                        "description": "Pay ₱1,250 –  ₱2,500",
+                        "name": "PURCHASE_SERVICE_2"
+                    },
+                    {
+                        "description": "Pay less than ₱1,250",
+                        "name": "PURCHASE_SERVICE_1"
+                    },
+                    {
+                        "description": "Driver Carries (max 50kg)",
+                        "name": "LOADING_SERVICE"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Vios and Wigo - Fixed rate for the first 40 km",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "0.7"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "1"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "0.6"
+                    }
+                },
+                "key": "SEDAN_INTERCITY",
+                "load": {
+                    "unit": "kg",
+                    "value": "200"
+                },
+                "specialRequests": []
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. HiAce Commuter - For multiple boxes or piles of stocks",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "1.2"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "2.1"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "1.2"
+                    }
+                },
+                "key": "TRUCK330",
+                "load": {
+                    "unit": "kg",
+                    "value": "1000"
+                },
+                "specialRequests": [
+                    {
+                        "description": "1 Assistant: 3-4 drops",
+                        "name": "MOVING_SERVICE_2"
+                    },
+                    {
+                        "description": "1 Assistant: 5  drops",
+                        "name": "MOVING_SERVICE_3"
+                    },
+                    {
+                        "description": "1 Assistant: 1-2 drops",
+                        "name": "MOVING_SERVICE_1"
+                    },
+                    {
+                        "description": "Driver Carries (max 50kg)",
+                        "name": "LOADING_SERVICE"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "locode": "PH MNL",
+        "name": "Manila NCR and South Luzon",
+        "services": [
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Isuzu F-Series - For Cargo Freight Distribution",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "2.3"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "10"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "2.4"
+                    }
+                },
+                "key": "10WHEEL_TRUCK",
+                "load": {
+                    "unit": "kg",
+                    "value": "12000"
+                },
+                "specialRequests": [
+                    {
+                        "description": "Assistant 1~2 stops",
+                        "name": "HELPER"
+                    },
+                    {
+                        "description": "Assistant 3  stops",
+                        "name": "HELPER_2"
+                    },
+                    {
+                        "description": "Document Processing",
+                        "name": "DOCUMENT_PROCESSING"
+                    },
+                    {
+                        "description": "Moving Helper",
+                        "name": "PARENT_HELPER"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Isuzu F-Series - Fixed rate for the first 40 km",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "2.3"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "10"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "2.4"
+                    }
+                },
+                "key": "LD_10WHEEL_TRUCK",
+                "load": {
+                    "unit": "kg",
+                    "value": "12000"
+                },
+                "specialRequests": [
+                    {
+                        "description": "Assistant 1~2 stops",
+                        "name": "HELPER"
+                    },
+                    {
+                        "description": "Assistant 3  stops",
+                        "name": "HELPER_2"
+                    },
+                    {
+                        "description": "Documents Processing",
+                        "name": "DOCUMENT_PROCESSING"
+                    },
+                    {
+                        "description": "Moving Helper",
+                        "name": "PARENT_HELPER"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "For small items such as food, documents, and paperbags",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "0.5"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "0.5"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "0.4"
+                    }
+                },
+                "key": "MOTORCYCLE",
+                "load": {
+                    "unit": "kg",
+                    "value": "20"
+                },
+                "specialRequests": [
+                    {
+                        "description": "Pay ₱1,501 – ₱2,000",
+                        "name": "PURCHASE_SERVICE_4"
+                    },
+                    {
+                        "description": "Pay ₱1,001 – ₱1,500",
+                        "name": "PURCHASE_SERVICE_3"
+                    },
+                    {
+                        "description": "Pay ₱501 – ₱1,000",
+                        "name": "PURCHASE_SERVICE_2"
+                    },
+                    {
+                        "description": "Pay less than ₱500",
+                        "name": "PURCHASE_SERVICE_1"
+                    },
+                    {
+                        "description": "Queueing Service",
+                        "name": "QUEUEING_SERVICE"
+                    },
+                    {
+                        "description": "Lalabag",
+                        "name": "THERMAL_BAG_1"
+                    },
+                    {
+                        "description": "Cash Handling (max: ₱2000)",
+                        "name": "CASH_ON_DELIVERY"
+                    },
+                    {
+                        "description": "CASH_ON_DELIVERY_AUTODEDUCT",
+                        "name": "CASH_ON_DELIVERY_AUTODEDUCT"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Innova and Avanza - For 1 large box like balikbayan box",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "0.9"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "1.2"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "1"
+                    }
+                },
+                "key": "MPV",
+                "load": {
+                    "unit": "kg",
+                    "value": "300"
+                },
+                "specialRequests": [
+                    {
+                        "description": "1 Assistant: 5  drops",
+                        "name": "MOVING_SERVICE_3"
+                    },
+                    {
+                        "description": "1 Assistant: 3-4 drops",
+                        "name": "MOVING_SERVICE_2"
+                    },
+                    {
+                        "description": "1 Assistant: 1-2 drops",
+                        "name": "MOVING_SERVICE_1"
+                    },
+                    {
+                        "description": "Driver Carries (max 50kg)",
+                        "name": "LOADING_SERVICE"
+                    },
+                    {
+                        "description": "Documents Processing",
+                        "name": "DOCUMENT_PROCESSING"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Innova and Avanza - Fixed rate for the first 40 km",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "0.9"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "1.2"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "1"
+                    }
+                },
+                "key": "MPV_INTERCITY",
+                "load": {
+                    "unit": "kg",
+                    "value": "300"
+                },
+                "specialRequests": []
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Vios and Wigo - For small boxes, cakes, multiple parcels",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "0.7"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "1"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "0.6"
+                    }
+                },
+                "key": "SEDAN",
+                "load": {
+                    "unit": "kg",
+                    "value": "200"
+                },
+                "specialRequests": [
+                    {
+                        "description": "Pay ₱3,751 – ₱5,000",
+                        "name": "PURCHASE_SERVICE_4"
+                    },
+                    {
+                        "description": "Pay ₱2,501 – ₱3,750",
+                        "name": "PURCHASE_SERVICE_3"
+                    },
+                    {
+                        "description": "Pay ₱1,250 –  ₱2,500",
+                        "name": "PURCHASE_SERVICE_2"
+                    },
+                    {
+                        "description": "Driver Carries (max 50kg)",
+                        "name": "LOADING_SERVICE"
+                    },
+                    {
+                        "description": "Pay less than ₱1,250",
+                        "name": "PURCHASE_SERVICE_1"
+                    },
+                    {
+                        "description": "Documents Processing",
+                        "name": "DOCUMENT_PROCESSING"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Vios and Wigo - Fixed rate for the first 40 km",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "0.7"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "1"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "0.6"
+                    }
+                },
+                "key": "SEDAN_INTERCITY",
+                "load": {
+                    "unit": "kg",
+                    "value": "200"
+                },
+                "specialRequests": []
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. L300 and H100 - For multiple boxes or piles of stocks",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "1.2"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "2.1"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "1.2"
+                    }
+                },
+                "key": "TRUCK330",
+                "load": {
+                    "unit": "kg",
+                    "value": "1000"
+                },
+                "specialRequests": [
+                    {
+                        "description": "1 Assistant: 5  drops",
+                        "name": "MOVING_SERVICE_3"
+                    },
+                    {
+                        "description": "1 Assistant: 3-4 drops",
+                        "name": "MOVING_SERVICE_2"
+                    },
+                    {
+                        "description": "1 Assistant: 1-2 drops",
+                        "name": "MOVING_SERVICE_1"
+                    },
+                    {
+                        "description": "Driver Carries (max 50kg)",
+                        "name": "LOADING_SERVICE"
+                    },
+                    {
+                        "description": "Documents Processing",
+                        "name": "DOCUMENT_PROCESSING"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Canter Closed Van - For multiple Sacked Goods or 1 Ref",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "1.7"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "2.7"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "1.7"
+                    }
+                },
+                "key": "TRUCK550",
+                "load": {
+                    "unit": "kg",
+                    "value": "2000"
+                },
+                "specialRequests": [
+                    {
+                        "description": "1 Assistant: 5  drops",
+                        "name": "MOVING_SERVICE_3"
+                    },
+                    {
+                        "description": "1 Assistant: 3-4 drops",
+                        "name": "MOVING_SERVICE_2"
+                    },
+                    {
+                        "description": "1 Assistant: 1-2 drops",
+                        "name": "MOVING_SERVICE_1"
+                    },
+                    {
+                        "description": "Documents Processing",
+                        "name": "DOCUMENT_PROCESSING"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. L200/Hilux FB - For more than 1 large balikbayan box",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "1.1"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "2.1"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "1.2"
+                    }
+                },
+                "key": "VAN",
+                "load": {
+                    "unit": "kg",
+                    "value": "600"
+                },
+                "specialRequests": [
+                    {
+                        "description": "1 Assistant: 5  drops",
+                        "name": "MOVING_SERVICE_3"
+                    },
+                    {
+                        "description": "1 Assistant: 3-4 drops",
+                        "name": "MOVING_SERVICE_2"
+                    },
+                    {
+                        "description": "1 Assistant: 1-2 drops",
+                        "name": "MOVING_SERVICE_1"
+                    },
+                    {
+                        "description": "Driver Carries (max 50kg)",
+                        "name": "LOADING_SERVICE"
+                    },
+                    {
+                        "description": "Documents Processing",
+                        "name": "DOCUMENT_PROCESSING"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. HiAce Commuter - For multiple boxes or piles of stocks",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "1.2"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "2.1"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "1.2"
+                    }
+                },
+                "key": "VAN1000",
+                "load": {
+                    "unit": "kg",
+                    "value": "1000"
+                },
+                "specialRequests": [
+                    {
+                        "description": "1 Assistant: 5  drops",
+                        "name": "MOVING_SERVICE_3"
+                    },
+                    {
+                        "description": "1 Assistant: 3-4 drops",
+                        "name": "MOVING_SERVICE_2"
+                    },
+                    {
+                        "description": "1 Assistant: 1-2 drops",
+                        "name": "MOVING_SERVICE_1"
+                    },
+                    {
+                        "description": "Driver Carries (max 50kg)",
+                        "name": "LOADING_SERVICE"
+                    },
+                    {
+                        "description": "Documents Processing",
+                        "name": "DOCUMENT_PROCESSING"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. L200 and Hilux FB - Fixed rate for the first 40 km",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "1.1"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "2.1"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "1.2"
+                    }
+                },
+                "key": "VAN_INTERCITY",
+                "load": {
+                    "unit": "kg",
+                    "value": "600"
+                },
+                "specialRequests": []
+            }
+        ]
+    },
+    {
+        "locode": "PH PAM",
+        "name": "North and Central Luzon",
+        "services": [
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Isuzu F-Series - For Cargo Freight Distribution",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "2.3"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "10"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "2.4"
+                    }
+                },
+                "key": "10WHEEL_TRUCK",
+                "load": {
+                    "unit": "kg",
+                    "value": "12000"
+                },
+                "specialRequests": [
+                    {
+                        "description": "Assistant 1~2 stops",
+                        "name": "HELPER"
+                    },
+                    {
+                        "description": "Assistant 3  stops",
+                        "name": "HELPER_2"
+                    },
+                    {
+                        "description": "Document Processing",
+                        "name": "DOCUMENT_PROCESSING"
+                    },
+                    {
+                        "description": "Moving Helper",
+                        "name": "PARENT_HELPER"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Isuzu F-Series - Fixed rate for the first 40 km",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "2.3"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "10"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "2.4"
+                    }
+                },
+                "key": "LD_10WHEEL_TRUCK",
+                "load": {
+                    "unit": "kg",
+                    "value": "12000"
+                },
+                "specialRequests": [
+                    {
+                        "description": "Assistant 1~2 stops",
+                        "name": "HELPER"
+                    },
+                    {
+                        "description": "Assistant 3  stops",
+                        "name": "HELPER_2"
+                    },
+                    {
+                        "description": "Documents Processing",
+                        "name": "DOCUMENT_PROCESSING"
+                    },
+                    {
+                        "description": "Moving Helper",
+                        "name": "PARENT_HELPER"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "For small items such as food, documents, and paperbags",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "0.5"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "0.5"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "0.4"
+                    }
+                },
+                "key": "MOTORCYCLE",
+                "load": {
+                    "unit": "kg",
+                    "value": "20"
+                },
+                "specialRequests": [
+                    {
+                        "description": "Pay ₱1,501 – ₱2,000",
+                        "name": "PURCHASE_SERVICE_4"
+                    },
+                    {
+                        "description": "Pay ₱1,001 – ₱1,500",
+                        "name": "PURCHASE_SERVICE_3"
+                    },
+                    {
+                        "description": "Pay ₱501 – ₱1,000",
+                        "name": "PURCHASE_SERVICE_2"
+                    },
+                    {
+                        "description": "Queueing Service",
+                        "name": "QUEUEING_SERVICE"
+                    },
+                    {
+                        "description": "Pay less than ₱500",
+                        "name": "PURCHASE_SERVICE_1"
+                    },
+                    {
+                        "description": "Insulated Box",
+                        "name": "THERMAL_BAG_1"
+                    },
+                    {
+                        "description": "Cash Handling (max: ₱2000)",
+                        "name": "CASH_ON_DELIVERY"
+                    },
+                    {
+                        "description": "CASH_ON_DELIVERY_AUTODEDUCT",
+                        "name": "CASH_ON_DELIVERY_AUTODEDUCT"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Innova and Avanza - For 1 large box like balikbayan box",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "2.8"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "4"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "3.2"
+                    }
+                },
+                "key": "MPV",
+                "load": {
+                    "unit": "kg",
+                    "value": "300"
+                },
+                "specialRequests": [
+                    {
+                        "description": "Documents Processing",
+                        "name": "DOCUMENT_PROCESSING"
+                    },
+                    {
+                        "description": "Driver Carries (max 50kg)",
+                        "name": "LOADING_SERVICE"
+                    },
+                    {
+                        "description": "1 Assistant: 1-2 drops",
+                        "name": "MOVING_SERVICE_1"
+                    },
+                    {
+                        "description": "1 Assistant: 3-4 drops",
+                        "name": "MOVING_SERVICE_2"
+                    },
+                    {
+                        "description": "1 Assistant: 5  drops",
+                        "name": "MOVING_SERVICE_3"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Innova and Avanza - Fixed rate for the first 40 km",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "2.8"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "4"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "3.2"
+                    }
+                },
+                "key": "MPV_INTERCITY",
+                "load": {
+                    "unit": "kg",
+                    "value": "300"
+                },
+                "specialRequests": []
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Hilux - Fixed rate for the first 40 km",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "1.5"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "1.5"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "1.5"
+                    }
+                },
+                "key": "PICKUP_800KG_INTERCITY",
+                "load": {
+                    "unit": "kg",
+                    "value": "800"
+                },
+                "specialRequests": []
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Vios and Wigo - For small boxes, cakes, multiple parcels",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "0.7"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "1"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "0.6"
+                    }
+                },
+                "key": "SEDAN",
+                "load": {
+                    "unit": "kg",
+                    "value": "200"
+                },
+                "specialRequests": [
+                    {
+                        "description": "Pay ₱3,751 – ₱5,000",
+                        "name": "PURCHASE_SERVICE_4"
+                    },
+                    {
+                        "description": "Pay ₱2,501 – ₱3,750",
+                        "name": "PURCHASE_SERVICE_3"
+                    },
+                    {
+                        "description": "Pay ₱1,250 –  ₱2,500",
+                        "name": "PURCHASE_SERVICE_2"
+                    },
+                    {
+                        "description": "Pay less than ₱1,250",
+                        "name": "PURCHASE_SERVICE_1"
+                    },
+                    {
+                        "description": "Driver Carries (max 50kg)",
+                        "name": "LOADING_SERVICE"
+                    },
+                    {
+                        "description": "Documents Processing",
+                        "name": "DOCUMENT_PROCESSING"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. Vios and Wigo - Fixed rate for the first 40 km",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "0.7"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "1"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "0.6"
+                    }
+                },
+                "key": "SEDAN_INTERCITY",
+                "load": {
+                    "unit": "kg",
+                    "value": "200"
+                },
+                "specialRequests": []
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. HiAce Commuter - For multiple boxes or piles of stocks",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "1.2"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "2.1"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "1.2"
+                    }
+                },
+                "key": "TRUCK330",
+                "load": {
+                    "unit": "kg",
+                    "value": "1000"
+                },
+                "specialRequests": [
+                    {
+                        "description": "Documents Processing",
+                        "name": "DOCUMENT_PROCESSING"
+                    },
+                    {
+                        "description": "Driver Carries (max 50kg)",
+                        "name": "LOADING_SERVICE"
+                    },
+                    {
+                        "description": "1 Assistant: 1-2 drops",
+                        "name": "MOVING_SERVICE_1"
+                    },
+                    {
+                        "description": "1 Assistant: 3-4 drops",
+                        "name": "MOVING_SERVICE_2"
+                    },
+                    {
+                        "description": "1 Assistant: 5  drops",
+                        "name": "MOVING_SERVICE_3"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. L200/Hilux FB - For more than 1 large balikbayan box",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "1.1"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "2.1"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "1.2"
+                    }
+                },
+                "key": "VAN",
+                "load": {
+                    "unit": "kg",
+                    "value": "600"
+                },
+                "specialRequests": [
+                    {
+                        "description": "1 Assistant: 5  drops",
+                        "name": "MOVING_SERVICE_3"
+                    },
+                    {
+                        "description": "1 Assistant: 3-4 drops",
+                        "name": "MOVING_SERVICE_2"
+                    },
+                    {
+                        "description": "1 Assistant: 1-2 drops",
+                        "name": "MOVING_SERVICE_1"
+                    },
+                    {
+                        "description": "Driver Carries (max 50kg)",
+                        "name": "LOADING_SERVICE"
+                    },
+                    {
+                        "description": "Document Processing",
+                        "name": "DOCUMENT_PROCESSING"
+                    }
+                ]
+            },
+            {
+                "deliveryItemSpecification": {},
+                "description": "Ex. L200 and Hilux FB - Fixed rate for the first 40 km",
+                "dimensions": {
+                    "height": {
+                        "unit": "m",
+                        "value": "1.1"
+                    },
+                    "length": {
+                        "unit": "m",
+                        "value": "2.1"
+                    },
+                    "width": {
+                        "unit": "m",
+                        "value": "1.2"
+                    }
+                },
+                "key": "VAN_INTERCITY",
+                "load": {
+                    "unit": "kg",
+                    "value": "600"
+                },
+                "specialRequests": []
+            }
+        ]
+    }
+]

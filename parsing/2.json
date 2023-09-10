@@ -1,0 +1,38 @@
+{
+    "distance": {
+        "unit": "m",
+        "value": "11340"
+    },
+    "expiresAt": "2023-09-10T00:35:30.00Z",
+    "isRouteOptimized": false,
+    "language": "EN_PH",
+    "priceBreakdown": {
+        "base": "39",
+        "currency": "PHP",
+        "extraMileage": "50",
+        "total": "89",
+        "totalBeforeOptimization": "89",
+        "totalExcludePriorityFee": "89"
+    },
+    "quotationId": "2786552799444431393",
+    "scheduleAt": "2023-09-10T00:35:25.00Z",
+    "serviceType": "MOTORCYCLE",
+    "stops": [
+        {
+            "address": "SM Mall of Asia, Seaside Boulevard, 123, Pasay, Metro Manila",
+            "coordinates": {
+                "lat": "14.5353730",
+                "lng": "120.9819754"
+            },
+            "stopId": "2786780518442692650"
+        },
+        {
+            "address": "SM Megamall, Doña Julia Vargas Avenue, Ortigas Center, Mandaluyong, Metro Manila",
+            "coordinates": {
+                "lat": "14.5861642",
+                "lng": "121.0566525"
+            },
+            "stopId": "2786780518442692651"
+        }
+    ]
+}
