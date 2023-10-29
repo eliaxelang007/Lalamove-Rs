@@ -687,7 +687,11 @@ impl FromStr for ApiEnvironment {
     type Err = ApiEnvironmentError;
 
     fn from_str(api_key_or_api_secret: &str) -> Result<Self, Self::Err> {
-        let environment = api_key_or_api_secret.chars().skip(3).collect::<String>();
+        let environment = api_key_or_api_secret
+            .chars()
+            .skip(3)
+            .take(4)
+            .collect::<String>();
 
         use ApiEnvironment as AE;
         use ApiEnvironmentError as AEE;
